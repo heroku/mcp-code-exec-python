@@ -5,4 +5,4 @@ web: uvicorn src.streamable_http_server:app --host=0.0.0.0 --port=${PORT:-8000} 
 # web: uvicorn src.sse_server:app --host=0.0.0.0 --port=${PORT:-8000} --workers=${WEB_CONCURRENCY:-1}
 
 # This is a special Heroku MCP process that we're declaring (optional, but gives you access to some nice features - see https://devcenter.heroku.com/articles/heroku-inference-working-with-mcp)
-mcp: python -m src.stdio_server
+mcp-python: python -m src.stdio_server
