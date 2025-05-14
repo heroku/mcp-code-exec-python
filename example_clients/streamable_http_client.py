@@ -5,7 +5,6 @@ import json
 import sys
 from mando import command, main
 from mcp import ClientSession
-from mcp.client.sse import sse_client
 from mcp.client.streamable_http import streamablehttp_client
 
 API_KEY=os.environ.get('API_KEY')
