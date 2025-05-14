@@ -170,12 +170,12 @@ There are two ways to easily test out your MCP server in STDIO mode:
 #### 1. Local STDIO - Example Python STDIO Client
 List tools:
 ```
-python example_clients/test_stdio.py mcp list_tools | jq
+python example_clients/stdio_client.py mcp list_tools | jq
 ```
 
 Example tool call request:
 ```bash
-python example_clients/test_stdio.py mcp call_tool --args '{
+python example_clients/stdio_client.py mcp call_tool --args '{
   "name": "code_exec_python",
   "arguments": {
     "code": "import numpy as np; print(np.random.rand(50).tolist())",
@@ -237,12 +237,12 @@ There are two ways to test out your remote MCP server in STDIO mode:
 #### 1. Remote STDIO - Example Python STDIO Client, Running On-Server
 To run against your deployed code, you can run the example client code on your deployed server inside a one-off dyno:
 ```bash
-heroku run --app $APP_NAME -- bash -c 'python -m example_clients.test_stdio mcp list_tools | jq'
+heroku run --app $APP_NAME -- bash -c 'python -m example_clients.stdio_client mcp list_tools | jq'
 ```
 or:
 ```bash
 heroku run --app $APP_NAME -- bash -c '
-python -m example_clients.test_stdio mcp call_tool --args '\''{
+python -m example_clients.stdio_client mcp call_tool --args '\''{
   "name": "code_exec_python",
   "arguments": {
     "code": "import numpy as np; print(np.random.rand(50).tolist())",
