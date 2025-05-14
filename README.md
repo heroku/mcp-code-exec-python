@@ -26,7 +26,7 @@
 ### **Set Required Environment Variables from Heroku CLI**
 Instead of manually setting each variable, use the Heroku CLI to pull the correct values.
 
-```sh
+```bash
 export APP_NAME=<your-heroku-app-name>
 heroku create $APP_NAME
 
@@ -69,14 +69,14 @@ heroku logs --tail -a $APP_NAME
 ## Local Testing
 ### Local Streamable HTTP (Stateless)
 One-time packages installation:
-```
+```bash
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
 If you're testing the HTTP server, in one terminal pane you'll need to start the server:
-```
+```bash
 source venv/bin/activate
 export API_KEY=$(heroku config:get API_KEY -a $APP_NAME)
 uvicorn src.streamable_http_server:app --reload
@@ -84,7 +84,8 @@ uvicorn src.streamable_http_server:app --reload
 *Running with --reload is optional, but great for local development*
 
 Next, in a new pane, export these variables:
-```g
+```bash
+source venv/bin/activate
 export API_KEY=$(heroku config:get API_KEY -a $APP_NAME)
 export MCP_SERVER_URL='http://localhost:8000'
 ```
@@ -196,7 +197,6 @@ cat <<EOF | python -m src.stdio_server
 {"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"code_exec_python","arguments":{"code":"import numpy as np; print(np.random.rand(50).tolist())","packages":["numpy"]}}}
 EOF
 ```
-*(Note that the server expects the client to send a shutdown request, so you can stop the connection with CTRL-C)*
 
 ## Remote Testing
 
