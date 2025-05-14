@@ -16,7 +16,7 @@
     - [Remote STDIO](#remote-stdio)
       - [1. Remote STDIO - Example Python STDIO Client, Running On-Server](#1-remote-stdio---example-python-stdio-client-running-on-server)
       - [2. Remote STDIO - Direct Calls to One-Off Dyno](#2-remote-stdio---direct-calls-to-one-off-dyno)
-    - [3. Coming Soon - Heroku MCP Gateway!](#3-coming-soon---heroku-mcp-gateway)
+  - [3. Coming Soon - Heroku MCP Gateway!](#3-coming-soon---heroku-mcp-gateway)
 
 ## Automatic Deployment
 
@@ -84,7 +84,7 @@ uvicorn src.streamable_http_server:app --reload
 *Running with --reload is optional, but great for local development*
 
 Next, in a new pane, export these variables:
-```
+```g
 export API_KEY=$(heroku config:get API_KEY -a $APP_NAME)
 export MCP_SERVER_URL='http://localhost:8000'
 ```
@@ -268,7 +268,7 @@ EOF
 
 Again, note that since we're running our request through a single command, we're unable to simulate a client's shutdown request.
 
-### 3. Coming Soon - Heroku MCP Gateway!
+## 3. Coming Soon - Heroku MCP Gateway!
 Soon, you'll also be able to connect up your MCP repo to Heroku's MCP Gateway, which will make streaming requests and responses from one-off MCP dynos simple!
 
 The Heroku MCP Gateway implements a rendezvous protocol so that you can easily talk to your MCP server one-off dynos (code execution isolation!) with seamless back-and-forth communication.
