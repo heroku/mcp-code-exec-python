@@ -5,7 +5,6 @@ We could have placed the ability to run both the stdio and SSE servers in this m
 split them into two separate modules — `sse_server.py` and `stdio_server.py` — for improved code clarity and
 so that the FastAPI SSE app can live in the global namespace. This enables `uvicorn` to run with `--reload`.
 """
-# File: src/set_up_tools.py
 import sys
 import logging
 from mcp.server.fastmcp import FastMCP
@@ -22,7 +21,7 @@ def set_up_tools_server():
     if (not config.STDIO_MODE_ONLY) or config.is_one_off_dyno:
         tools["code_exec_python"] = code_exec_python
 
-    # Enable streamable HTTP mode
+    # Enable stateless streamable HTTP mode
     mcp_server = FastMCP("StatelessServer", stateless_http=True)
     for name, tool in tools.items():
         mcp_server.tool(name=name)(tool)
