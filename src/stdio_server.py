@@ -13,6 +13,7 @@ from src.set_up_tools import set_up_tools_server
 mcp_server = set_up_tools_server()
 
 if __name__ == "__main__":
+    logging.info("Starting MCP STDIO server")
     try:
         mcp_server.run(transport="stdio")
     except asyncio.CancelledError:
