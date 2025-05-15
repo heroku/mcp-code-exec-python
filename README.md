@@ -114,7 +114,7 @@ Unlike the other MCP transport methods, stateless streamable HTTP doesn't requir
 
 So, you can optionally test the server with *direct* CURL requests:
 ```bash
-curl -X POST http://localhost:8000/mcp/ \
+curl -X POST $MCP_SERVER_URL/mcp/ \
     -H "Authorization: Bearer $API_KEY" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json, text/event-stream" \

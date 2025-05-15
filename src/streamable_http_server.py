@@ -41,4 +41,4 @@ app.add_middleware(APIKeyMiddleware)
 
 # Mount the MCP streamable HTTP app
 # app.mount("/", mcp_server.streamable_http_app())
-app.mount("/mcp/", mcp_server.streamable_http_app(), name="mcp")
+app.mount("/", mcp_server.streamable_http_app(), name="mcp")
