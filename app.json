@@ -9,7 +9,7 @@
             "generator": "secret"
         },
         "WEB_CONCURRENCY": {
-            "description": "Number of Uvicorn worker processes to launch (leave at 1 for async SSE server)",
+            "description": "Number of Uvicorn worker processes to launch (leave at 1)",
             "value": "1"
         },
         "STDIO_MODE_ONLY": {

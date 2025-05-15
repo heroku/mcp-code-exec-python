@@ -1,9 +1,8 @@
 """
-Runs the MCP server in SSE mode.
+Runs the MCP server in Streamable HTTP mode.
 
-We're using Uvicorn in the Procfile to run the SSE server. While we could use `mcp_server.run()` to achieve
-approximately the same result, running Uvicorn directly gives us more flexibility — for example, the ability
-to use `--reload`, which is fantastic for fast-iteration during local development.
+We're using Uvicorn in the Procfile to run the server. Running Uvicorn directly gives us more flexibility,
+like using --reload for fast iteration during local development.
 """
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -43,4 +42,4 @@ class APIKeyASGIMiddleware:
 mcp_server = set_up_tools_server()
 app = FastAPI()
 app.add_middleware(APIKeyASGIMiddleware, header_name="X-API-Key", valid_key=API_KEY)
-app.mount("/", mcp_server.sse_app())
+app.mount("/", mcp_server.streamable_http_app(), name="mcp")

@@ -31,8 +31,8 @@ def mcp(method_name, args=None):
     """Call an MCP method by name with optional JSON args.
 
     Examples:
-        python example_clients/test_sse.py mcp list_tools
-        python example_clients/test_sse.py mcp call_tool --args '{"name": "fetch_webpage_and_markdownify", "arguments": {"url": "https://example.com"}}'
+        python example_clients/sse_client.py mcp list_tools
+        python example_clients/sse_client.py mcp call_tool --args '{"name": "code_exec_python", "arguments": {"code": "print(123)"}}'
     """
     result = asyncio.run(run(method_name, args))
     print(json.dumps(result.model_dump(), indent=2))
