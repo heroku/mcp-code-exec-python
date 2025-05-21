@@ -15,6 +15,10 @@
         "STDIO_MODE_ONLY": {
             "description": "Only allow tool requests via STDIO mode?",
             "value": "false"
+        },
+        "USE_TEMP_DIR": {
+           "description": "Run Python code in a temporary virtualenv (not a sandbox, but does isolate packages).",
+            "value": "false"
         }
     },
     "formation": [
