@@ -15,6 +15,10 @@
         "STDIO_MODE_ONLY": {
             "description": "Only allow tool requests via STDIO mode?",
             "value": "false"
+        },
+        "REMOTE_SERVER_TRANSPORT_MODULE": {
+            "description": "Tranport module name used for deployed web app (applicable when web formation size is >0). `streamable_http_server` or `sse_server`.",
+            "value": "streamable_http_server"
         }
     },
     "formation": [

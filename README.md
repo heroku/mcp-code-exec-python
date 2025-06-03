@@ -6,13 +6,13 @@
   - [Manual Deployment](#manual-deployment)
     - [**Set Required Environment Variables from Heroku CLI**](#set-required-environment-variables-from-heroku-cli)
   - [Local Testing](#local-testing)
-    - [Local SSE](#local-sse)
-      - [Local SSE - Example Requests](#local-sse---example-requests)
+    - [Local Streamable HTTP, SSE](#local-streamable-http-sse)
+      - [Local Streamable HTTP, SSE - Example Requests](#local-streamable-http-sse---example-requests)
     - [Local STDIO](#local-stdio)
       - [1. Local STDIO - Example Python STDIO Client](#1-local-stdio---example-python-stdio-client)
       - [2. Local STDIO - Direct Calls](#2-local-stdio---direct-calls)
   - [Remote Testing](#remote-testing)
-    - [Remote SSE](#remote-sse)
+    - [Remote Streamable HTTP, SSE](#remote-streamable-http-sse)
     - [Remote STDIO](#remote-stdio)
       - [1. Remote STDIO - Example Python STDIO Client, Running On-Server](#1-remote-stdio---example-python-stdio-client-running-on-server)
       - [2. Remote STDIO - Direct Calls to One-Off Dyno](#2-remote-stdio---direct-calls-to-one-off-dyno)
@@ -35,6 +35,8 @@ heroku buildpacks:set heroku/python -a $APP_NAME
 # set a private API key that you create, for example:
 heroku config:set API_KEY=$(openssl rand -hex 32) -a $APP_NAME
 heroku config:set STDIO_MODE_ONLY=<true/false> -a $APP_NAME
+# set the remote server type (module) that your web process will use (only relevant for web deployments)
+heroku config:set REMOTE_SERVER_TRANSPORT_MODULE=<streamable_http_server/sse_server>
 ```
 *Note: we recommend setting `STDIO_MODE_ONLY` to `true` for security and code execution isolation security in non-dev environments.*
 
@@ -67,7 +69,6 @@ heroku logs --tail -a $APP_NAME
 ```
 
 ## Local Testing
-### Local SSE
 One-time packages installation:
 ```bash
 virtualenv venv
@@ -75,30 +76,34 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-If you're testing SSE, in one terminal pane you'll need to start the server:
-```
+### Local Streamable HTTP, SSE
+If you're testing (stateless) Streamable HTTP OR SSE, in one terminal pane you'll need to start the server:
+```bash
 source venv/bin/activate
 export API_KEY=$(heroku config:get API_KEY -a $APP_NAME)
-uvicorn src.sse_server:app --reload
+# Either run src.streamable_http_server or src.sse_server, here:
+uvicorn src.streamable_http_server:app --reload
 ```
-*Running with --reload is optional, but great for local development*
+*Running with `--reload` is optional, but great for local development*
 
 Next, in a new pane, you can try running some queries against your server:
-#### Local SSE - Example Requests
+#### Local Streamable HTTP, SSE - Example Requests
 First run:
 ```bash
 export API_KEY=$(heroku config:get API_KEY -a $APP_NAME)
 ```
 
+In the following commands, use either `example_clients/test_streamable_http.py` if you ran the streamable HTTP server above, or `example_clients/test_sse.py` if you're running the SSE server.
+
 List tools:
 ```bash
-python example_clients/test_sse.py mcp list_tools | jq
+python example_clients/test_streamable_http.py mcp list_tools | jq
 ```
 
 Example tool call request:
 *NOTE: this will intentionally NOT work if you have set `STDIO_MODE_ONLY` to `true`.*
 ```bash
-python example_clients/test_sse.py mcp call_tool --args '{
+python example_clients/test_streamable_http.py mcp call_tool --args '{
   "name": "code_exec_python",
   "arguments": {
     "code": "import numpy as np; print(np.random.rand(50).tolist())",
@@ -143,12 +148,18 @@ EOF
 
 ## Remote Testing
 
-### Remote SSE
-To test your remote `SSE` server, you'll need to make sure a web process is actually spun up. To save on costs, by default this repository doesn't spin up web dynos on creation, as many folks only want to use `STDIO` mode (local and one-off dyno) requests:
-```
+### Remote Streamable HTTP, SSE
+To test your remote `Streamble HTTP` or `SSE` server, you'll need to make sure a web process is actually spun up. To save on costs, by default this repository doesn't spin up web dynos on creation, as many folks only want to use `STDIO` mode (local and one-off dyno) requests:
+```bash
 heroku ps:scale web=1 -a $APP_NAME
 ```
 You only need to do this once, unless you spin back down to 0 web dynos to save on costs (`heroku ps:scale web=0 -a $APP_NAME`). To confirm currently running dynos, use `heroku ps -a $APP_NAME`.
+
+By default, this app deploys a Streamable HTTP MCP server - if you want to deploy an SSE server, run:
+```bash
+heroku config:set REMOTE_SERVER_TRANSPORT_MODULE=sse_server
+```
+Which will affect which server is run in the Procfile.
 
 Next, run:
 
@@ -157,7 +168,7 @@ export API_KEY=$(heroku config:get API_KEY -a $APP_NAME)
 export MCP_SERVER_URL=$(heroku info -s -a $APP_NAME | grep web_url | cut -d= -f2)
 ```
 
-Next, you can run the same queries as shown in the [Local SSE - Example Requests](#local-sse---example-requests) testing section - because you've set `MCP_SERVER_URL`, the client will call out to your deployed server.
+Next, you can run the same queries as shown in the [Local SSE - Example Requests](#local-streamable-http-sse---example-requests) testing section - because you've set `MCP_SERVER_URL`, the client will call out to your deployed server.
 
 ### Remote STDIO
 There are two ways to test out your remote MCP server in STDIO mode:
