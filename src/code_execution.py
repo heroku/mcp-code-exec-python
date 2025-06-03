@@ -5,6 +5,8 @@ import tempfile
 from pydantic import Field
 from typing import Annotated
 from typing import Optional, Dict, Any, List, Dict, Any
+# local:
+from src import config
 
 def run_command(cmd: List[str]) -> Dict[str, Any]:
     """Executes a command using subprocess and returns output and errors."""
@@ -83,11 +85,7 @@ def code_exec_python(
     packages: Annotated[
         Optional[List[str]],
         Field(description="Optional list of pip package names to install before execution.")
-    ] = None,
-    use_temp_dir: Annotated[
-        bool,
-        Field(description="Use a temporary isolated virtual environment in a tempdir for this run.")
-    ] = False
+    ] = None
 ) -> Dict[str, Any]:
     """Executes a Python code snippet with optional pip dependencies.
 
@@ -100,7 +98,7 @@ def code_exec_python(
             - 'stdout': Captured standard output.
             - 'stderr': Captured standard error or install failure messages.
     """
-    if use_temp_dir:
+    if config.USE_TEMP_DIR:
         return run_in_tempdir(code, packages)
 
     install_result = install_dependencies(packages)

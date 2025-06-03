@@ -17,6 +17,7 @@ def get_env_variable(var_name, required=True):
 PORT = int(os.environ.get('PORT', 8000))
 WEB_CONCURRENCY = int(os.environ.get('WEB_CONCURRENCY', 1))
 STDIO_MODE_ONLY = os.getenv("STDIO_MODE_ONLY", "false").lower() == "true"
+USE_TEMP_DIR = os.getenv("USE_TEMP_DIR", "false").lower() == "true"
 
 # Local or Not:
 is_one_off_dyno = os.getenv("DYNO") is not None
