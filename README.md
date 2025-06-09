@@ -2,7 +2,7 @@
 # Heroku MCP Code Execution - Python
 
 - [Heroku MCP Code Execution - Python](#heroku-mcp-code-execution---python)
-  - [Automatic Deployment](#automatic-deployment)
+  - [Automatic Deployment (Recommended)](#automatic-deployment-recommended)
   - [Manual Deployment](#manual-deployment)
     - [**Set Required Environment Variables from Heroku CLI**](#set-required-environment-variables-from-heroku-cli)
   - [Local Testing](#local-testing)
@@ -18,7 +18,7 @@
       - [2. Remote STDIO - Direct Calls to One-Off Dyno](#2-remote-stdio---direct-calls-to-one-off-dyno)
     - [3. Coming Soon - Heroku MCP Gateway!](#3-coming-soon---heroku-mcp-gateway)
 
-## Automatic Deployment
+## Automatic Deployment (Recommended)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/heroku/mcp-code-exec-python)
 
