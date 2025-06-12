@@ -87,6 +87,7 @@ uvicorn src.streamable_http_server:app --reload
 *Running with `--reload` is optional, but great for local development*
 
 Next, in a new pane, you can try running some queries against your server:
+
 #### Local Streamable HTTP, SSE - Example Requests
 First run:
 ```bash

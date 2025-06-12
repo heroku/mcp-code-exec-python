@@ -54,7 +54,6 @@ async def test_list_tools(ctx):
 
 
 async def test_code_exec(ctx):
-    payload = json.dumps({"name": "code_exec_python",
-                          "arguments": {"code": "print(2+2)"}})
+    payload = json.dumps({"name": "code_exec_python", "arguments": {"code": "print(2+2)"}})
     data = await _safe_call(ctx, "call_tool", "--args", payload)
     assert _extract_stdout(data) == "4"

@@ -31,12 +31,20 @@ pip install -r requirements.txt
 
 ## 2 · Run local transports only
 ```bash
+git push heroku <your-branch>:main
+```
+
+## 2 · Run local & one-off-dyno (STDIO) deployed transports
+```bash
 pytest tests -q
 ```
 
-## 3 - Run local & remote transports
+## 3 - Run local & all deployed transports
 ```bash
+REMOTE_SERVER_TYPE=$(heroku config:get REMOTE_SERVER_TYPE) \
 MCP_SERVER_URL=$(heroku info -s -a "$APP_NAME" | grep web_url | cut -d= -f2 | tr -d '\n') \
 API_KEY=$(heroku config:get API_KEY -a "$APP_NAME") \
 pytest tests -q
 ```
+
+*NOTE: if your `REMOTE_SERVER_TYPE` is set to `sse_server` and not the default `streamable_http_server`, you'll need to change the `REMOTE_SERVER_TRANSPORT_MODULE` declaration line in `.github/workflows/test.yml` to make sure that the end to end integration tests against the temporary deployed remote server are using the appropriate client code.*
