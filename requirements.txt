@@ -1,7 +1,7 @@
 mcp[client,server]==1.9.4
 fastapi==0.115.12
 uvicorn==0.34.3
-python-dotenv==1.1.0
+python-dotenv==1.1.1
 mando==0.8.2
 # --- dev / CI only -------------------------------------------------
 pytest>=8.0
