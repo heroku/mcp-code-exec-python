@@ -1,5 +1,5 @@
 mcp[client,server]==1.13.1
-fastapi==0.116.1
+fastapi==0.117.1
 uvicorn==0.35.0
 python-dotenv==1.1.1
 mando==0.8.2
