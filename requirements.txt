@@ -1,4 +1,4 @@
-mcp[client,server]==1.23.1
+mcp[client,server]==1.26.0
 fastapi==0.123.0
 uvicorn==0.40.0
 python-dotenv==1.2.1
