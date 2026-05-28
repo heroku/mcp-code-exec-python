@@ -5,4 +5,4 @@ python-dotenv==1.2.2
 mando==0.8.2
 # --- dev / CI only -------------------------------------------------
 pytest>=9.0.3
-pytest-asyncio>=0.23
+pytest-asyncio>=1.4.0
